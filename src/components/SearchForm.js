@@ -2,18 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { View, StyleSheet } from 'react-native'
 import { Card, Title, Paragraph, ActivityIndicator, TextInput } from 'react-native-paper'
 import DropDown from 'react-native-paper-dropdown'
-import { Auth } from 'aws-amplify'
-
-const testList = [
-    {
-        label: "1",
-        value: 1
-    },
-    {
-        label: "2",
-        value: 2
-    }
-]
+import { stateCodes, bedsMinList, bathsMinList } from '../constants'
 
 export const SearchForm = () => {
     const [showStateDropDown, setShowStateDropDown] = useState(false);
@@ -22,7 +11,6 @@ export const SearchForm = () => {
     const [state, setState] = useState("")
     const [bedsMin, setBedsMin] = useState(0)
     const [bathsMin, setBathsMin] = useState(0)
-
 
     return (
         <View style={styles.view}>
@@ -41,7 +29,7 @@ export const SearchForm = () => {
               onDismiss={() => setShowStateDropDown(false)}
               value={state}
               setValue={setState}
-              list={testList}
+              list={stateCodes}
             />
             <TextInput
                 label="Zip Code"
@@ -57,7 +45,7 @@ export const SearchForm = () => {
               onDismiss={() => setShowBedDropDown(false)}
               value={bedsMin}
               setValue={setBedsMin}
-              list={testList}
+              list={bedsMinList}
             />
             <DropDown
               label={"Baths Min"}
@@ -67,7 +55,7 @@ export const SearchForm = () => {
               onDismiss={() => setShowBathDropDown(false)}
               value={bathsMin}
               setValue={setBathsMin}
-              list={testList}
+              list={bathsMinList}
             />
             <TextInput
                 label="Price Max"

@@ -4,8 +4,6 @@ import { Appbar, Menu } from 'react-native-paper';
 
 export const NavBar = ({navigation, back}) => {
 
-  const _goBack = () => navigation.goBack;
-
   const [visible, setVisible] = useState(false);
   const openMenu = () => setVisible(true);
   const closeMenu = () => setVisible(false);
@@ -20,7 +18,7 @@ export const NavBar = ({navigation, back}) => {
 
   return (
     <Appbar.Header>
-        <Appbar.BackAction onPress={_goBack} />
+        <Appbar.BackAction onPress={navigation.goBack} />
         <Appbar.Content title="SwipeHome" onPress={() => navigation.navigate('Home')}/>
         <Menu
             visible={visible}
