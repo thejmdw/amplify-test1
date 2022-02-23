@@ -6,11 +6,7 @@ import { stateCodes, bedsMinList, bathsMinList } from '../constants'
 
 
 
-export const SearchForm = () => {
-    const [showStateDropDown, setShowStateDropDown] = useState(false);
-    const [showBedDropDown, setShowBedDropDown] = useState(false);
-    const [showBathDropDown, setShowBathDropDown] = useState(false);
-    const [state, setState] = useState("")
+export const SearchForm = ( {navigation} ) => {
     
     const [ city, setCity ] = useState("")
     const [ stateCode, setStateCode ] = useState("")
@@ -42,6 +38,7 @@ export const SearchForm = () => {
                 <Picker
                     selectedValue={stateCode}
                     onValueChange={(itemValue, itemIndex) => setStateCode(itemValue)}
+                    style={styles.pickerText}
                 >
                     <Picker.Item label={"State"} value={"0"} />
                     { stateCodes.map(state => (
@@ -61,6 +58,7 @@ export const SearchForm = () => {
                     <Picker
                         selectedValue={bedsMin}
                         onValueChange={(itemValue, itemIndex) => setBedsMin(itemValue)}
+                        style={styles.pickerText}
                     >  
                         <Picker.Item label={"Beds Min"} value={"null"} />
                         { bedsMinList.map(beds => (
@@ -72,7 +70,7 @@ export const SearchForm = () => {
                     <Picker
                         selectedValue={bathsMin}
                         onValueChange={(itemValue, itemIndex) => setBathsMin(itemValue)}
-
+                        style={styles.pickerText}
                     >
                         <Picker.Item label={"Baths Min"} value={"null"} />
                         { bathsMinList.map(baths => (
@@ -88,7 +86,9 @@ export const SearchForm = () => {
                 dense={true}
                 style={styles.field}
             />
-            <Button onPress={() => console.log(search)}>SEARCH</Button>
+            <Button onPress={() => {
+                navigation.navigate("SearchResults")
+                console.log(search)}}>SEARCH</Button>
             </Card>
         </View>
     )
@@ -96,7 +96,6 @@ export const SearchForm = () => {
 
 const styles = StyleSheet.create({
     view: {
-        // flex: 1,
         alignItems: 'center',
         justifyContent: 'center'  
     },
@@ -118,5 +117,8 @@ const styles = StyleSheet.create({
         borderTopRightRadius: 4,
         borderBottomColor: "#bfbfbf",
         borderBottomWidth: 1.6
+    },
+    pickerText: {
+        color: "#6a6a6a"
     }
   });

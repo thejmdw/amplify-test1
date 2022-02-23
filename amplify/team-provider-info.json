@@ -13,7 +13,14 @@
     },
     "categories": {
       "auth": {
-        "swipehometest19d137ca8": {}
+        "swipehometest176d6c093": {},
+        "swipehometest19d137ca8": {},
+        "swipehometest1": {
+          "userPoolId": "us-east-2_oVRC38zyK",
+          "userPoolName": "SwipeHomeTest2",
+          "webClientId": "41oaopbh7qb7iemp9r2prslpcd",
+          "nativeClientId": "41oaopbh7qb7iemp9r2prslpcd"
+        }
       }
     }
   }

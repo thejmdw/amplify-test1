@@ -18,7 +18,7 @@ export const NavBar = ({navigation, back}) => {
 
   return (
     <Appbar.Header>
-        <Appbar.BackAction onPress={navigation.goBack} />
+        { back ? <Appbar.BackAction onPress={navigation.goBack} /> : <></> }
         <Appbar.Content title="SwipeHome" onPress={() => navigation.navigate('Home')}/>
         <Menu
             visible={visible}

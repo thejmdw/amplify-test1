@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, Button } from 'react-native'
-import Amplify from 'aws-amplify';
+import Amplify, { Auth } from 'aws-amplify';
 import awsconfig from './src/aws-exports';
 import { withAuthenticator } from 'aws-amplify-react-native';
+import { useNavigation } from '@react-navigation/native'
 import { NavigationContainer } from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import { HomeScreen } from './src/screens/Home'
+import { WelcomeScreen } from './src/screens/Welcome'
 import { NavBar } from './src/components/NavBar'
 import { SearchForm } from './src/components/SearchForm'
-import { Provider as PaperProvider } from 'react-native-paper';
+import { SearchResults } from './src/components/SearchResults'
+import { Provider as PaperProvider, ActivityIndicator } from 'react-native-paper';
 
 Amplify.configure(awsconfig);
 
@@ -16,15 +19,31 @@ Amplify.configure(awsconfig);
 const App = () => {
   const Stack = createStackNavigator();
 
+  const [loading, setLoading] = useState(true)
+  const [appUser, setAppUser] = useState({})
+  const [firstTimeUser, setFirstTimeUser] = useState("true")
+
+  useEffect(() => {
+    Auth.currentAuthenticatedUser({bypassCache: true}).then(user => {
+        if (user.attributes["custom:firstTimeUser"] === "false") {
+          setFirstTimeUser("false")
+        }
+        setLoading(false)
+        // console.log(appUser)
+    })
+}, [])
+
   return (
     <PaperProvider>
       <NavigationContainer>
         <Stack.Navigator 
-          initialRouteName="Home" screenOptions={{
-          header: (props) => <NavBar {...props} />
+          screenOptions={{
+          header: (props) => <NavBar {...props}/>
         }}>
-          <Stack.Screen name="Login" component={HomeScreen} options={{title: 'SwipeHome'}} />
+          { firstTimeUser === "false" ? <Stack.Screen name="Home" component={HomeScreen} options={{title: 'SwipeHome'}}/> 
+          : <Stack.Screen name="Welcome" component={WelcomeScreen} options={{title: 'SwipeHome'}}/> }
           <Stack.Screen name="SearchForm" component={SearchForm}/>
+          <Stack.Screen name="SearchResults" component={SearchResults}/>
         </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>
