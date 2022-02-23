@@ -1,6 +1,6 @@
 {
   "auth": {
-    "swipehometest17a3a0bb6": {
+    "swipehometest19d137ca8": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
@@ -11,8 +11,7 @@
           "EMAIL"
         ],
         "signupAttributes": [
-          "EMAIL",
-          "NAME"
+          "EMAIL"
         ],
         "passwordProtectionSettings": {
           "passwordPolicyMinLength": 8,
