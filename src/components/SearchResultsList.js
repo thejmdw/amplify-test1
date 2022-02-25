@@ -7,9 +7,10 @@ export const SearchResultsList = ({ data }) => {
       const renderItem = ({ item }) => (
         <SearchResultsCard 
           id={item.property_id}
-          city={item.address.city}
-          postalCode={item.address.postal_code}
-          address={item.address.line}
+          city={item.address?.city}
+          stateCode={item.address?.state_code}
+          postalCode={item.address?.postal_code}
+          address={item.address?.line}
           beds={item.beds}
           baths={item.baths}
           price={item.price}

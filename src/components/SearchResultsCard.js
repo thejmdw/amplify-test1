@@ -6,7 +6,7 @@ export const SearchResultsCard = ({address, id, city, state, postalCode, beds, b
     return (
         <View style={styles.view}>
             <Card style={styles.card}>
-                <Card.Cover source={{ uri: thumbnail}}/>
+                <Card.Cover source={{ uri: thumbnail}} sytle={styles.cover}/>
                 <Text>{id}</Text>
                 <Text>{address}</Text>
                 <Text>{postalCode}</Text>
@@ -40,4 +40,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         elevation: 4,
     },
+    cover: {
+        width: 100,
+        height: 200,
+    }
 });

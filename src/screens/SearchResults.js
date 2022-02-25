@@ -1,5 +1,5 @@
-import React, { useEffect, useContext } from 'react';
-import {SafeAreaView, StyleSheet } from 'react-native';
+import React, { useEffect, useContext, useState } from 'react';
+import {SafeAreaView, StyleSheet, ActivityIndicator } from 'react-native';
 import { SearchResultsList } from '../components/SearchResultsList';
 import { SearchContext } from '../providers/SearchProvider'
 
@@ -79,12 +79,15 @@ const fakeListings= [
     },
 ]
 
-export const SearchResults = (props) => {
+export const SearchResults = ({ navigation }) => {
+    // const [ houses, setHouses ]= useState([])
 
+    // const { getHouses } = useContext(SearchContext)
     const { houses, getHouses } = useContext(SearchContext)
 
     useEffect(() => {
         getHouses()
+        // .then((data) => {setHouses(data.properties)})
     }, [])
 
     // if (houses) {
@@ -93,10 +96,8 @@ export const SearchResults = (props) => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <SearchResultsList
-                data={houses}
-
-            />
+            { houses ? <SearchResultsList data={houses}/> : 
+                <ActivityIndicator animating={true}/>}
         </SafeAreaView>
     );
 };
