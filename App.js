@@ -9,8 +9,9 @@ import {createStackNavigator} from '@react-navigation/stack';
 import { HomeScreen } from './src/screens/Home'
 import { WelcomeScreen } from './src/screens/Welcome'
 import { NavBar } from './src/components/NavBar'
+import { SearchProvider } from './src/providers/SearchProvider'
 import { SearchForm } from './src/components/SearchForm'
-import { SearchResults } from './src/components/SearchResults'
+import { SearchResults } from './src/screens/SearchResults'
 import { Provider as PaperProvider, ActivityIndicator } from 'react-native-paper';
 
 Amplify.configure(awsconfig);
@@ -34,18 +35,22 @@ const App = () => {
 }, [])
 
   return (
+ loading ? <ActivityIndicator animating={true} /> :  
     <PaperProvider>
-      <NavigationContainer>
-        <Stack.Navigator 
-          screenOptions={{
-          header: (props) => <NavBar {...props}/>
-        }}>
-          { firstTimeUser === "false" ? <Stack.Screen name="Home" component={HomeScreen} options={{title: 'SwipeHome'}}/> 
-          : <Stack.Screen name="Welcome" component={WelcomeScreen} options={{title: 'SwipeHome'}}/> }
-          <Stack.Screen name="SearchForm" component={SearchForm}/>
-          <Stack.Screen name="SearchResults" component={SearchResults}/>
-        </Stack.Navigator>
-      </NavigationContainer>
+      <SearchProvider>
+        <NavigationContainer>
+          <Stack.Navigator 
+            screenOptions={{
+            header: (props) => <NavBar {...props}/>
+          }}>
+            { firstTimeUser === "false" ? 
+            <Stack.Screen name="Home" component={HomeScreen} options={{title: 'SwipeHome'}}/> 
+            : <Stack.Screen name="Welcome" component={WelcomeScreen} options={{title: 'SwipeHome'}}/> }
+            <Stack.Screen name="SearchForm" component={SearchForm}/>
+            <Stack.Screen name="SearchResults" component={SearchResults}/>
+          </Stack.Navigator>
+        </NavigationContainer>
+      </SearchProvider>
     </PaperProvider>
   )
 }

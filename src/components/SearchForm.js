@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useContext } from 'react'
 import { View, StyleSheet } from 'react-native'
-import { Card, Title, Paragraph, ActivityIndicator, TextInput, Button } from 'react-native-paper'
+import { Card, RadioButton, TextInput, Button } from 'react-native-paper'
 import {Picker} from '@react-native-picker/picker';
 import { stateCodes, bedsMinList, bathsMinList } from '../constants'
-
+import { SearchContext } from '../providers/SearchProvider'
 
 
 export const SearchForm = ( {navigation} ) => {
+    const { getHouses } = useContext(SearchContext)
     
     const [ city, setCity ] = useState("")
     const [ stateCode, setStateCode ] = useState("")
@@ -14,14 +15,18 @@ export const SearchForm = ( {navigation} ) => {
     const [bedsMin, setBedsMin] = useState(0)
     const [bathsMin, setBathsMin] = useState(0)
     const [ priceMax, setPriceMax ] = useState("")
+    const [ type, setType ] = useState("")
+    const [ value, setValue ] = useState("")
 
     const search = {
         city,
         bathsMin,
-        postalCode,
-        bedsMin,
-        bathsMin,
-        priceMax
+        state_code: stateCode,
+        postal_code: postalCode,
+        beds_min: bedsMin,
+        baths_min: bathsMin,
+        price_max: priceMax,
+        value
     }
 
     return (
@@ -40,9 +45,9 @@ export const SearchForm = ( {navigation} ) => {
                     onValueChange={(itemValue, itemIndex) => setStateCode(itemValue)}
                     style={styles.pickerText}
                 >
-                    <Picker.Item label={"State"} value={"0"} />
+                    <Picker.Item key="state placeholder" label={"State"} value={"0"} />
                     { stateCodes.map(state => (
-                        <Picker.Item label={state.label} value={state.value} />
+                        <Picker.Item key={state.label+" id"} label={state.label} value={state.value} />
                     ))}
                 </Picker>
             </View>
@@ -60,9 +65,9 @@ export const SearchForm = ( {navigation} ) => {
                         onValueChange={(itemValue, itemIndex) => setBedsMin(itemValue)}
                         style={styles.pickerText}
                     >  
-                        <Picker.Item label={"Beds Min"} value={"null"} />
+                        <Picker.Item key={"beds placeholer"} label={"Beds Min"} value={"null"} />
                         { bedsMinList.map(beds => (
-                            <Picker.Item label={beds.label} value={beds.value} />
+                            <Picker.Item key={"beds " + beds.label} label={beds.label} value={beds.value} />
                         ))}
                     </Picker>
                 </View>
@@ -72,9 +77,9 @@ export const SearchForm = ( {navigation} ) => {
                         onValueChange={(itemValue, itemIndex) => setBathsMin(itemValue)}
                         style={styles.pickerText}
                     >
-                        <Picker.Item label={"Baths Min"} value={"null"} />
+                        <Picker.Item key={"baths placeholder"} label={"Baths Min"} value={"null"} />
                         { bathsMinList.map(baths => (
-                            <Picker.Item label={baths.label} value={baths.value} />
+                            <Picker.Item key={"baths " + baths.label} label={baths.label} value={baths.value} />
                         ))}
                     </Picker>
                 </View>
@@ -86,9 +91,28 @@ export const SearchForm = ( {navigation} ) => {
                 dense={true}
                 style={styles.field}
             />
+            <View style={styles.radios}>
+            <RadioButton.Group 
+                onValueChange={value => setValue(value)} 
+                value={value}>
+                    <View style={styles.radios}>
+                    <RadioButton.Item
+                        value="rent"
+                        label="Rent"
+                    />
+                    <RadioButton.Item
+                        value="sale"
+                        label="Buy"
+                    />
+                    </View>
+            </RadioButton.Group>
+            </View>
             <Button onPress={() => {
-                navigation.navigate("SearchResults")
-                console.log(search)}}>SEARCH</Button>
+                console.log(search)
+                search.city = search.city.toLowerCase()
+                getHouses(search)
+                .then(() => {navigation.navigate("SearchResults")})
+                }}>SEARCH</Button>
             </Card>
         </View>
     )
@@ -96,12 +120,12 @@ export const SearchForm = ( {navigation} ) => {
 
 const styles = StyleSheet.create({
     view: {
+        flex: 1,
         alignItems: 'center',
         justifyContent: 'center'  
     },
     surface: {
-        
-        padding: 10,
+        padding: 8,
         height: '90%',
         width: '90%',
         justifyContent: "space-between",
@@ -120,5 +144,9 @@ const styles = StyleSheet.create({
     },
     pickerText: {
         color: "#6a6a6a"
+    },
+    radios: {
+        flex: 8,
+        flexDirection: "row"
     }
   });
