@@ -27,6 +27,9 @@ export const NavBar = ({navigation, back}) => {
             <Appbar.Action icon="menu" color="white" onPress={openMenu} />
             }>
             <Menu.Item 
+                onPress={() => navigation.navigate('ProfileScreen')} 
+                title="Profile" />
+            <Menu.Item 
                 onPress={() => navigation.navigate('SearchForm')} 
                 title="Search" />
             <Menu.Item 

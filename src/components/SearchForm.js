@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react'
 import { View, StyleSheet } from 'react-native'
-import { Card, RadioButton, TextInput, Button } from 'react-native-paper'
+import { Card, RadioButton, TextInput, Button, Switch, Text } from 'react-native-paper'
 import {Picker} from '@react-native-picker/picker';
 import { stateCodes, bedsMinList, bathsMinList } from '../constants'
 import { SearchContext } from '../providers/SearchProvider'
@@ -8,6 +8,10 @@ import { SearchContext } from '../providers/SearchProvider'
 
 export const SearchForm = ( {navigation} ) => {
     const { getHouses } = useContext(SearchContext)
+    const [isSwitchOn, setIsSwitchOn] = React.useState(false);
+    const [ validation, setValidation ] = useState(true) 
+
+  const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
     
     const [ city, setCity ] = useState("")
     const [ stateCode, setStateCode ] = useState("")
@@ -16,7 +20,7 @@ export const SearchForm = ( {navigation} ) => {
     const [bathsMin, setBathsMin] = useState(0)
     const [ priceMax, setPriceMax ] = useState("")
     const [ type, setType ] = useState("")
-    const [ value, setValue ] = useState("")
+    const [ value, setValue ] = useState("rent")
 
     const search = {
         city,
@@ -27,6 +31,18 @@ export const SearchForm = ( {navigation} ) => {
         baths_min: bathsMin,
         price_max: priceMax,
         value
+    }
+
+    const validate = (search) => {
+        if (search.city.length === 0) {
+            setValidation(false)
+        } else if (search.stateCode.length === 0) {
+            setValidation(false)  
+        } else if (search.postalCode.length === 0) {
+            setValidation(false)
+        } else {
+
+        }
     }
 
     return (
@@ -99,18 +115,24 @@ export const SearchForm = ( {navigation} ) => {
                     <RadioButton.Item
                         value="rent"
                         label="Rent"
-                    />
+                        status={ {value} === "rent" ? 'checked' : 'unchecked'}
+                        />
                     <RadioButton.Item
                         value="sale"
                         label="Buy"
+                        status={ {value} === "buy" ? 'checked' : 'unchecked'}
                     />
                     </View>
             </RadioButton.Group>
+            {/* <Text>Rent</Text>
+            <Switch value={value} onValueChange={value => setValue(value)} />
+            <Text>Buy</Text> */}
             </View>
             <Button onPress={() => {
                 console.log(search)
                 search.city = search.city.toLowerCase()
                 getHouses(search)
+                // .then(() => {navigation.navigate("HouseList")})
                 .then(() => {navigation.navigate("SearchResults")})
                 }}>SEARCH</Button>
             </Card>
@@ -147,6 +169,7 @@ const styles = StyleSheet.create({
     },
     radios: {
         flex: 8,
-        flexDirection: "row"
+        flexDirection: "row",
+        alignItems: 'center'
     }
   });

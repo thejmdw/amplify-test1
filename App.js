@@ -12,6 +12,8 @@ import { NavBar } from './src/components/NavBar'
 import { SearchProvider } from './src/providers/SearchProvider'
 import { SearchForm } from './src/components/SearchForm'
 import { SearchResults } from './src/screens/SearchResults'
+import { ProfileScreen } from './src/screens/Profile'
+import { HouseList  } from './src/screens/Carousel'
 import { Provider as PaperProvider, ActivityIndicator } from 'react-native-paper';
 
 Amplify.configure(awsconfig);
@@ -48,6 +50,8 @@ const App = () => {
             : <Stack.Screen name="Welcome" component={WelcomeScreen} options={{title: 'SwipeHome'}}/> }
             <Stack.Screen name="SearchForm" component={SearchForm}/>
             <Stack.Screen name="SearchResults" component={SearchResults}/>
+            <Stack.Screen name="HouseList" component={HouseList}/>
+            <Stack.Screen name="ProfileScreen" component={ProfileScreen}/>
           </Stack.Navigator>
         </NavigationContainer>
       </SearchProvider>

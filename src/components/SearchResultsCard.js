@@ -1,47 +1,42 @@
 import React from 'react'
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, ImageBackground } from 'react-native';
 import { Card, Button } from 'react-native-paper' 
 
 export const SearchResultsCard = ({address, id, city, state, postalCode, beds, baths, price, thumbnail}) => {
     return (
         <View style={styles.view}>
             <Card style={styles.card}>
-                <Card.Cover source={{ uri: thumbnail}} sytle={styles.cover}/>
-                <Text>{id}</Text>
-                <Text>{address}</Text>
-                <Text>{postalCode}</Text>
-                <Text>{city}</Text>
-                <Text>{state}</Text>
-                <Text>{beds}</Text>
-                <Text>{baths}</Text>
-                <Text>{price}</Text>
-                {/* <Texrt>{}</Texrt> */}
-                <Button>OK</Button>
+                <Card.Cover source={{ uri: thumbnail}} style={styles.cover}/>
+                <Text>{address} {city}, {state} {postalCode}</Text>
+                {/* <Text>{postalCode}</Text> */}
+                <Text>Beds: {beds}</Text>
+                <Text>Baths: {baths}</Text>
+                <Text>Price: ${price}</Text>
             </Card>
         </View>
     )
 };
 
 const styles = StyleSheet.create({
-    view: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center', 
-        backgroundColor: "#663399",
+    // view: {
+    //     flex: 1,
+    //     alignItems: 'center',
+    //     justifyContent: 'center', 
+    //     // backgroundColor: "#663399",
 
 
-    },
+    // },
     card: {
-        margin:10,
+        marginTop:10,
         padding: 8,
-        height: 500,
-        width: 300,
+        height: 510,
+        width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
         elevation: 4,
     },
     cover: {
-        width: 100,
-        height: 200,
+        width: 355,
+        height: 400,
     }
 });
