@@ -2,16 +2,16 @@ import React from 'react'
 import { View, StyleSheet, Text, ImageBackground } from 'react-native';
 import { Card, Button } from 'react-native-paper' 
 
-export const SearchResultsCard = ({address, id, city, state, postalCode, beds, baths, price, thumbnail}) => {
+export const ListingCard = ({listing}) => {
     return (
         <View style={styles.view}>
             <Card style={styles.card}>
-                <Card.Cover source={{ uri: thumbnail}} style={styles.cover}/>
-                <Text>{address} {city}, {state} {postalCode}</Text>
+                <Card.Cover source={{ uri: listing.thumbnail}} style={styles.cover}/>
+                <Text>{listing.line?.address} {listing.line?.city}, {listing.line?.state_code} {listing.line?.postal_code}</Text>
                 {/* <Text>{postalCode}</Text> */}
-                <Text>Beds: {beds}</Text>
-                <Text>Baths: {baths}</Text>
-                <Text>{`Price: $${price}`}</Text>
+                {/* <Text>Beds: {listing.beds}</Text>
+                <Text>Baths: {listing.baths}</Text> */}
+                <Text>{`Price: $${listing.price}`}</Text>
             </Card>
         </View>
     )

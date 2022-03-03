@@ -92,47 +92,28 @@ export const SearchResults = ({ navigation }) => {
     const [ cards, setCards ] = useState()
     const [ visible, setVisible ] = useState(false) 
     const [ currentListing, setCurrentListing ] = useState({})
-    // const swiper = useRef()
+    const swiper = useRef(null)
 
     // const { getHouses } = useContext(SearchContext)
-    const { houses, getHouses } = useContext(SearchContext)
+    const { houses, getHouses, setListing } = useContext(SearchContext)
 
     useEffect(() => {
         getHouses()
-        // setCards(houses)
-        // .then((data) => {setHouses(data.properties)})
     }, [])
 
     useEffect(() => {
         setCards(houses)
     }, [houses])
 
-    // if (houses) {
-    //     console.log(houses)
-    // }
-    console.log(houses)
-    console.log('--------------')
-    console.log('--------------')
-    console.log('--------------')
-    console.log('--------------')
-    console.log('--------------')
-    console.log('--------------')
-    console.log(cards)
-
     const showModal = (index) => {
         setCurrentItem(houses[index])
         setVisible(true);
     }
     const hideModal = () => setVisible(false);
-    // return (
-    //     <SafeAreaView style={styles.container}>
-    //         { houses ? <HouseList data={houses}/> : 
-    //             <ActivityIndicator animating={true}/>}
-    //     </SafeAreaView>
-    // );
+
     const renderCard = ( card, index ) => {
 
-        console.log(card)
+        // console.log(card)
         return (
         <SearchResultsCard
           id={card.property_id}
@@ -146,49 +127,48 @@ export const SearchResults = ({ navigation }) => {
           thumbnail={card.thumbnail} 
         />
       )};
-
-    const onSwiped = (type) => {
-        console.log(`on swiped ${type}`)
-      }
     
     const onSwipedAllCards = () => {
         setSwipedAllCards(true)
+        setCardIndex(0)
       };
 
       const swipeLeft = () => {
-        swiper.swipeLeft()
+        swiper.current.swipeLeft()
       };
       const swipeRight = () => {
-        swiper.swipeRight()
+        swiper.current.swipeRight()
       };
       const swipeBack = () => {
-        swiper.swipeBack()
+          setCardIndex(cardIndex - 1)
+        swiper.current.swipeBack()
       };
+
+      const goToListing = (array, index) => {
+        setListing(array[index])
+           navigation.navigate("Listing")
+      }
 
 
         return (
-
-
-
-               cards ? <><Swiper
-                    ref={swiper => {
-                        this.swiper = swiper
-                    }}
+               cards ? <View style={styles.container}><Swiper
+                    backgroundColor={'#9f9f9f'}
+                    ref={swiper}
+                    onSwipedRight={() => { console.log(`swiped card index: ${cardIndex}`); setCardIndex(cardIndex + 1);}}
+                    onSwipedLeft={() => {console.log(`swiped card index: ${cardIndex}`); setCardIndex(cardIndex + 1);}}
                     verticalSwipe={false}
-                    onSwiped={() => onSwiped('general')}
-                    onSwipedLeft={() => onSwiped('left')}
-                    onSwipedRight={() => onSwiped('right')}
-                    // onTapCard={showModal}
                     cards={cards}
                     cardIndex={cardIndex}
                     cardVerticalMargin={0}
                     renderCard={renderCard}
+                    onTapCard={() => {goToListing(cards, cardIndex)}}
                     onSwipedAll={onSwipedAllCards}
-                    stackSize={1}
-                    // stackSeparation={10}
+                    stackSize={2}
+                    stackSeparation={10}
                     animateOverlayLabelsOpacity
                     animateCardOpacity
                     swipeBackCard={true}
+                    // showSecondCard={false}
                     infinite={true}
                   >
                 </Swiper>
@@ -210,7 +190,7 @@ export const SearchResults = ({ navigation }) => {
                         onPress={swipeRight}
                     />
                 </View>
-                </>
+                </View>
                 : <Text>...Loading</Text>
 
 
@@ -220,6 +200,7 @@ export const SearchResults = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: '#fff'
     },
     item: {
         backgroundColor: '#f9c2ff',

@@ -15,6 +15,7 @@ import { SearchResults } from './src/screens/SearchResults'
 import { ProfileScreen } from './src/screens/Profile'
 import { HouseList  } from './src/screens/Carousel'
 import { Provider as PaperProvider, ActivityIndicator } from 'react-native-paper';
+import { ListingScreen } from './src/screens/Listing';
 
 Amplify.configure(awsconfig);
 
@@ -52,6 +53,7 @@ const App = () => {
             <Stack.Screen name="SearchResults" component={SearchResults}/>
             <Stack.Screen name="HouseList" component={HouseList}/>
             <Stack.Screen name="ProfileScreen" component={ProfileScreen}/>
+            <Stack.Screen name="Listing" component={ListingScreen}/>
           </Stack.Navigator>
         </NavigationContainer>
       </SearchProvider>

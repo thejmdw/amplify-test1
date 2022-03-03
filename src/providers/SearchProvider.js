@@ -10,6 +10,7 @@ export const SearchProvider = (props) => {
   const [housesSale, setHousesSale] = useState([])
   const [localHouses, setLocalHouses] = useState([])
   const [localHousesSale, setLocalHousesSale] = useState([])
+  const [listing, setListing] = useState({})
 
   const addSearch = (searchObj) => {
     return fetch(`http://localhost:8088/searches`, {
@@ -100,7 +101,7 @@ export const SearchProvider = (props) => {
   return (
     <SearchContext.Provider value ={
       {
-        houses, getHouses, deleteSearch, getHousesForRent, getHousesForSale, localHouses, getLocalHousesRent, getLocalHousesSale
+        houses, getHouses, deleteSearch, getHousesForRent, getHousesForSale, localHouses, getLocalHousesRent, getLocalHousesSale, listing, setListing
       }
     }>
       {props.children}
