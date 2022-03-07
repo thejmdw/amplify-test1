@@ -113,7 +113,7 @@ export const SearchResults = ({ navigation }) => {
 
     const renderCard = ( card, index ) => {
 
-        // console.log(card)
+        console.log(card)
         return (
         <SearchResultsCard
           id={card.property_id}
@@ -122,7 +122,8 @@ export const SearchResults = ({ navigation }) => {
           postalCode={card.address?.postal_code}
           address={card.address?.line}
           beds={card.beds}
-          baths={card.baths}
+          bathsFull={card.baths_full}
+          bathsHalf={card.baths_half}
           price={card.price}
           thumbnail={card.thumbnail} 
         />

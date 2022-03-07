@@ -2,7 +2,7 @@ import React from 'react'
 import { View, StyleSheet, Text, ImageBackground } from 'react-native';
 import { Card, Button } from 'react-native-paper' 
 
-export const SearchResultsCard = ({address, id, city, state, postalCode, beds, baths, price, thumbnail}) => {
+export const SearchResultsCard = ({address, id, city, state, postalCode, beds, bathsFull, bathsHalf, price, thumbnail}) => {
     return (
         <View style={styles.view}>
             <Card style={styles.card}>
@@ -10,7 +10,7 @@ export const SearchResultsCard = ({address, id, city, state, postalCode, beds, b
                 <Text>{address} {city}, {state} {postalCode}</Text>
                 {/* <Text>{postalCode}</Text> */}
                 <Text>Beds: {beds}</Text>
-                <Text>Baths: {baths}</Text>
+                <Text>Baths: {bathsFull + bathsHalf*.5}</Text>
                 <Text>{`Price: $${price}`}</Text>
             </Card>
         </View>
