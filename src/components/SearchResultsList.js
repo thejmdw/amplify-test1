@@ -23,7 +23,7 @@ export const SearchResultsList = ({ data }) => {
         <FlatList
           data={data}
           renderItem={renderItem}
-          keyExtractor={item => item.property_id}
+          keyExtractor={item => item.listing_id}
         />
       </>
     );

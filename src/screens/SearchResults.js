@@ -125,7 +125,7 @@ export const SearchResults = ({ navigation }) => {
           bathsFull={card.baths_full}
           bathsHalf={card.baths_half}
           price={card.price}
-          thumbnail={card.thumbnail} 
+          thumbnail={card.thumbnail ? card.thumbnail : card.photos[0].href} 
         />
       )};
     
@@ -164,7 +164,7 @@ export const SearchResults = ({ navigation }) => {
                     renderCard={renderCard}
                     onTapCard={() => {goToListing(cards, cardIndex)}}
                     onSwipedAll={onSwipedAllCards}
-                    stackSize={2}
+                    stackSize={cards.length > 1 ? 2 : 1}
                     stackSeparation={10}
                     animateOverlayLabelsOpacity
                     animateCardOpacity

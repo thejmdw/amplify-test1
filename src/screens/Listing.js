@@ -12,9 +12,10 @@ export const ListingScreen = () => {
     const [ isLoading, setIsLoading ] = useState(true)
 
     useEffect(() => {
+        console.log(listing)
         getListingDetail(listing.property_id)
         .then((data) => setHouse(data))
-        setThumbnail(listing.thumbnail)
+        setThumbnail(listing.thumbnail ? listing.thumbnail : listing.photos[0].href)
         // setListing({})
         setIsLoading(false)
     }, [])

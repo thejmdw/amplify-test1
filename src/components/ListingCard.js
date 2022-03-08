@@ -47,10 +47,14 @@ export const ListingCard = ({listingDetail, thumbnail}) => {
                 </Pressable>
                 <Text>{listingDetail.address?.line} {listingDetail.address?.city}, {listingDetail.address?.state_code} {listingDetail.address?.postal_code}</Text>
                 <Text>Neighborhood: {listingDetail.address?.neighborhood_name}</Text>
+                <Text>SqFt: {listingDetail.building_size?.size} {listingDetail.building_size?.units}</Text>
                 <Text>Beds: {listingDetail.beds}</Text>
                 <Text>Full Baths: {listingDetail.baths_full}</Text>
                 <Text>Half Baths: {listingDetail.baths_half}</Text>
                 <Text>{`Price: $${listingDetail.price}`}</Text>
+                <Text>Lot Size: {listingDetail.lot_size?.size} {listingDetail.lot_size?.units}</Text>
+                {/* <Text>Realtor: {listingDetail.agents[0]?.name}</Text> */}
+                {/* <Text>Company: {listingDetail.branding.listing_office.list_item?.name}</Text> */}
             </Card>
             : <ActivityIndicator animating={true}></ActivityIndicator>}
         </ScrollView>
