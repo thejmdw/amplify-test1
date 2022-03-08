@@ -9,12 +9,7 @@ export const ListingCard = ({listingDetail, thumbnail}) => {
     const showModal = () => {
         setVisible(true)
     };
-    // const hideModal = () => setVisible(false);
-    // console.log(listingDetail)
-    // console.log(listingDetail.photos)
-    const renderItem = ({ href }) => {
-        <Image style={styles.photo} source={{uri: href}}/>
-    }
+
 
     return (
         <>

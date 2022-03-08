@@ -4,6 +4,8 @@ import { Card, Avatar, ActivityIndicator, Text, Title, Button, Badge, Chip, Icon
 // import { Badge } from 'react-native-elements'
 import { plus } from 'react-native-vector-icons'
 import { Auth } from 'aws-amplify'
+import { ProfileTabs } from "../components/ProfileTabs";
+
 
 export const ProfileScreen = () => {
     const [ loading, setLoading ] = useState(true)
@@ -20,7 +22,7 @@ export const ProfileScreen = () => {
     console.log(user)
 
     return (
-        user ?
+        user ? <>
             <View style={styles.view}>
                 <View>
                 {/* <Badge
@@ -31,13 +33,13 @@ export const ProfileScreen = () => {
                 >
                     +
                 </Badge> */}
-                <IconButton
+                {/* <IconButton
                     icon="camera"
                     size={25}
                     onPress={() => console.log('Pressed the fucking button')}
                     color={Colors.red900}
                     style={{ position: 'absolute', bottom: 0, right: 0, zIndex: 1, padding: 5, borderRadius: 20}}
-                    />
+                    /> */}
                 {/* <Chip
                     icon="camera"
                     style={{ position: 'absolute', bottom: 0, right: 10, zIndex: 1 }}/> */}
@@ -45,7 +47,7 @@ export const ProfileScreen = () => {
                 </View>
                 <Title>{user?.attributes.email}</Title>
 
-                <View>
+                {/* <View>
                     <Title>Random 5 Faves</Title>
                 </View>
                 <View>
@@ -53,8 +55,12 @@ export const ProfileScreen = () => {
                 </View>
                 <View>
                     <Title>Past 5 Searches</Title>
-                </View>
+                </View> */}
             </View>
+                <View>
+                <ProfileTabs />
+                </View>
+                </>
                 : <ActivityIndicator animating={true}/>
     )               
 }

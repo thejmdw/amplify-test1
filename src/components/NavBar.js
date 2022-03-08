@@ -27,10 +27,10 @@ export const NavBar = ({navigation, back}) => {
             <Appbar.Action icon="menu" color="white" onPress={openMenu} />
             }>
             <Menu.Item 
-                onPress={() => navigation.navigate('ProfileScreen')} 
+                onPress={() => {setVisible(false); navigation.navigate('ProfileScreen')}} 
                 title="Profile" />
             <Menu.Item 
-                onPress={() => navigation.navigate('SearchForm')} 
+                onPress={() => {setVisible(false);navigation.navigate('SearchForm')}} 
                 title="Search" />
             <Menu.Item 
                 onPress={signOut} 
