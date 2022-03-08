@@ -33,7 +33,7 @@ import {
  export const ProfileTabs = () => {
 
       return (
-          <View style={{minHeight: 500}}>
+          <View style={{minHeight: 200}}>
         <Tabs
           // defaultIndex={0} // default = 0
           // uppercase={false} // true/false | default=true | labels are uppercase
@@ -51,12 +51,13 @@ import {
             <ScreenWithText text={'FAVES'}/>
           </TabScreen>
           <TabScreen label="Searches">
-            <View style={{ backgroundColor: 'black', flex:1 }} >
+            <View  >
             <Title>text</Title>
             </View>
           </TabScreen>
           <TabScreen
             label="Messages"
+            disabled
             // icon="bag-suitcase"
             // optional props
             // onPressIn={() => {
