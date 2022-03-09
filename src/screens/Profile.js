@@ -1,22 +1,45 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, FlatList } from "react-native";
 import { Card, Avatar, ActivityIndicator, Text, Title, Button, Badge, Chip, IconButton, Colors } from "react-native-paper";
 // import { Badge } from 'react-native-elements'
 import { plus } from 'react-native-vector-icons'
-import { Auth } from 'aws-amplify'
+import { API, Auth } from 'aws-amplify'
 import { ProfileTabs } from "../components/ProfileTabs";
+import { listSearches } from "../graphql/queries";
 
 
 export const ProfileScreen = () => {
     const [ loading, setLoading ] = useState(true)
     const [ user, setUser ] = useState(undefined)
+    const [searchList, setSearchList] = useState([])
+      
+    const fetchSearches = async () => {
+        try {
+            const searches = await API.graphql({query: listSearches})
+            if (searches.data.listSearches) {
+                console.log(searches)
+                setSearchList(searches.data.listSearches.items)
+            }
+        } catch(e) {
+            console.log(e.message)
+        }
+    }
 
     useEffect(() => {
-        Auth.currentAuthenticatedUser({bypassCache: true}).then(user => {
+        fetchSearches()
+        // API.graphql({query: listSearches})
+        .then(() => Auth.currentAuthenticatedUser({bypassCache: true}))
+        .then(user => {
             setUser(user)
             setLoading(false)
             
         })
+        // Auth.currentAuthenticatedUser({bypassCache: true}).then(user => {
+        //     setUser(user)
+        //     setLoading(false)
+            
+        // })
+        
     }, [])
 
     console.log(user)
@@ -58,7 +81,7 @@ export const ProfileScreen = () => {
                 </View> */}
             </View>
                 <View>
-                <ProfileTabs />
+                <ProfileTabs searchList={searchList}/>
                 </View>
                 </>
                 : <ActivityIndicator animating={true}/>

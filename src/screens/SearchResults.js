@@ -97,13 +97,13 @@ export const SearchResults = ({ navigation }) => {
     // const { getHouses } = useContext(SearchContext)
     const { houses, getHouses, setListing } = useContext(SearchContext)
 
-    useEffect(() => {
-        getHouses()
-    }, [])
+    // useEffect(() => {
+    //     getHouses()
+    // }, [])
 
     useEffect(() => {
         setCards(houses)
-    }, [houses])
+    }, [])
 
     const showModal = (index) => {
         setCurrentItem(houses[index])

@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native'
+import { View, Text, FlatList } from 'react-native'
 import {
     Button,
     Title,
@@ -10,7 +10,8 @@ import {
     useTabIndex,
     useTabNavigation,
   } from 'react-native-paper-tabs';
-  
+  import { API } from 'aws-amplify';
+
   const ScreenWithText = ({text}) => {
       return (
           <View>
@@ -30,7 +31,9 @@ import {
       </View>
     );
   }
- export const ProfileTabs = () => {
+
+ export const ProfileTabs = ({searchList}) => {
+
 
       return (
           <View style={{minHeight: 200}}>
@@ -51,8 +54,13 @@ import {
             <ScreenWithText text={'FAVES'}/>
           </TabScreen>
           <TabScreen label="Searches">
-            <View  >
-            <Title>text</Title>
+            <View>
+            <FlatList 
+                            data={searchList}
+                            renderItem={({item}) => <Text>{item.city}</Text>}
+                            keyExtractor={item => item.id}
+                            // horizontal={true}
+                        />
             </View>
           </TabScreen>
           <TabScreen

@@ -4,7 +4,8 @@ import { Card, RadioButton, TextInput, Button, Switch, Text } from 'react-native
 import {Picker} from '@react-native-picker/picker';
 import { stateCodes, bedsMinList, bathsMinList } from '../constants'
 import { SearchContext } from '../providers/SearchProvider'
-
+import { Auth, API, graphqlOperation} from 'aws-amplify';
+import { createSearch } from '../graphql/mutations';
 
 export const SearchForm = ( {navigation} ) => {
     const { getHouses } = useContext(SearchContext)
@@ -19,18 +20,17 @@ export const SearchForm = ( {navigation} ) => {
     const [bedsMin, setBedsMin] = useState(0)
     const [bathsMin, setBathsMin] = useState(0)
     const [ priceMax, setPriceMax ] = useState("")
-    const [ type, setType ] = useState("")
-    const [ value, setValue ] = useState("rent")
+    // const [ type, setType ] = useState("")
+    const [ type, setType ] = useState("rent")
 
     const search = {
         city,
-        bathsMin,
         state_code: stateCode,
         postal_code: postalCode,
         beds_min: bedsMin,
         baths_min: bathsMin,
         price_max: priceMax,
-        value
+        type
     }
 
     const validate = (search) => {
@@ -43,6 +43,26 @@ export const SearchForm = ( {navigation} ) => {
         } else {
 
         }
+    }
+
+    const handleSubmit = () => {
+        search.city = search.city.toLowerCase()
+        
+        API.graphql(graphqlOperation(createSearch, {
+                    input: {
+                        city: search.city,
+                        state_code: search.state_code,
+                        postal_code: search.postal_code,
+                        beds_min: search.beds_min,
+                        baths_min: search.baths_min,
+                        price_max: parseInt(search.price_max),
+                        type: search.type
+                    }
+                })
+            )
+            getHouses(search)
+                .then(() => {navigation.navigate("SearchResults")})
+            
     }
 
     return (
@@ -109,18 +129,18 @@ export const SearchForm = ( {navigation} ) => {
             />
             <View style={styles.radios}>
             <RadioButton.Group 
-                onValueChange={value => setValue(value)} 
-                value={value}>
+                onValueChange={value => setType(value)} 
+                value={type}>
                     <View style={styles.radios}>
                     <RadioButton.Item
                         value="rent"
                         label="Rent"
-                        status={ {value} === "rent" ? 'checked' : 'unchecked'}
+                        status={ {type} === "rent" ? 'checked' : 'unchecked'}
                         />
                     <RadioButton.Item
                         value="sale"
                         label="Buy"
-                        status={ {value} === "buy" ? 'checked' : 'unchecked'}
+                        status={ {type} === "buy" ? 'checked' : 'unchecked'}
                     />
                     </View>
             </RadioButton.Group>
@@ -128,13 +148,7 @@ export const SearchForm = ( {navigation} ) => {
             <Switch value={value} onValueChange={value => setValue(value)} />
             <Text>Buy</Text> */}
             </View>
-            <Button onPress={() => {
-                console.log(search)
-                search.city = search.city.toLowerCase()
-                getHouses(search)
-                // .then(() => {navigation.navigate("HouseList")})
-                .then(() => {navigation.navigate("SearchResults")})
-                }}>SEARCH</Button>
+            <Button onPress={handleSubmit}>SEARCH</Button>
             </Card>
         </View>
     )
